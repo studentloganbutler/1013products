@@ -1,7 +1,6 @@
 import { config } from "dotenv";
 import once from "./connections/once.js";
 import productsData from "./data.js";
-import router from "../router.js";
 
 const {
   db: { name, collectionName },
