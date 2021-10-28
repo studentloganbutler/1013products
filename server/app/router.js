@@ -3,9 +3,9 @@ import config from "./config.js";
 import client from "./db/connections/client.js";
 import { ObjectId } from "mongoDB";
 
-const {
-  db: { name, collectionName },
-} = config;
+const collection = client.db(config.db.collectionName).collection(config.db.name);
+
+
 
 const router = new Router();
 
@@ -15,7 +15,7 @@ router.get("/", (_, res) => {
 
 router.get("/products", (_, res) => {
   const products = client
-    .db("products")
+    .db("Products")
     .collection("products")
     .find()
     .toArray();
@@ -24,19 +24,25 @@ router.get("/products", (_, res) => {
 
 router.get("/products/:id", async (req, res) => {
   const product = await client
-    .db(name)
-    .collection(collectionName)
+    .db("Products")
+    .collection("products")
     .findOne({ _id: ObjectId(req.params.id) });
   res.json(product);
 });
 
 router.post("/products", async (req, res) => {
-  const createdProduct = await collectionName.insertOne(req.body);
+  const createdProduct = await collection.insertOne(req.body);
   res.json(createdProduct);
 });
 
+router.put("/products", async (req, res) =>{
+  const updatedProducts = await collection.updateOne({id: ObjectId(req.body.id)}
+  , {$set: req.body.payload})
+  res.json(updatedProducts)
+});
+
 router.delete("/products", async (req, res) => {
-  const deleteProduct = await collectionName.deleteOne({
+  const deleteProduct = await collection.deleteOne({
     id: ObjectId(req.body.id),
   });
   res.json(deleteProduct);
