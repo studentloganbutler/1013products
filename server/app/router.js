@@ -3,8 +3,7 @@ import config from "./config.js";
 import client from "./db/connections/client.js";
 import { ObjectId } from "mongoDB";
 
-const collection = client.db(config.db.collectionName).collection(config.db.name);
-
+const collection =  client.db(config.db.name).collection(config.db.collectionName)
 
 
 const router = new Router();
