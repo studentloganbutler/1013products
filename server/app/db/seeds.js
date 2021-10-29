@@ -1,4 +1,4 @@
-import { config } from "../../config.js";
+import { config } from " ../config.js";
 import once from "./connections/once.js";
 import productsData from "./data.js";
 
